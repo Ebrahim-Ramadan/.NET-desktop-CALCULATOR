@@ -126,7 +126,7 @@ namespace CALCULATOR
             }
             catch (Exception ex)
             {
-                textBox1.Text = "Error";
+                textBox1.Text = "Operation failed for some logic reasons of yours";
                 // Handle and log the error, e.g., division by zero.
             }
             
