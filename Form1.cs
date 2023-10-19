@@ -18,6 +18,7 @@ namespace CALCULATOR
         }
         bool operationPerformed = false;
 
+        //template func to display the numbers btns in the textBox1
         private void HandleButtonClick(Button button)
         {
             if (operationPerformed)
@@ -35,7 +36,7 @@ namespace CALCULATOR
 
         private void pi_Click(object sender, EventArgs e)
         {
-            HandleButtonClick((Button)sender);
+            textBox1.Text += " 3.141592 ";
 
         }
 
@@ -133,27 +134,22 @@ namespace CALCULATOR
 
         private void backspace_Click(object sender, EventArgs e)
         {
-            HandleButtonClick((Button)sender);
+            textBox1.Text += ((Button)sender).Text;
         }
 
         private void minus_Click(object sender, EventArgs e)
         {
-            HandleButtonClick((Button)sender);
+            textBox1.Text += ((Button)sender).Text;
         }
 
         private void times_Click(object sender, EventArgs e)
         {
-            if (operationPerformed)
-            {
-                textBox1.Clear();
-                operationPerformed = false;
-            }
-            textBox1.Text += ((Button)sender).Text; ;
+            textBox1.Text += ((Button)sender).Text; 
         }
 
         private void over_Click(object sender, EventArgs e)
         {
-            HandleButtonClick((Button)sender);
+            textBox1.Text += ((Button)sender).Text;
         }
 
         private void dot_Click(object sender, EventArgs e)
@@ -164,6 +160,24 @@ namespace CALCULATOR
         private void clear_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
+        }
+
+        private void ln_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox1.Text))
+            {
+                try
+                {
+                    double input = double.Parse(textBox1.Text);
+                    double result = Math.Log(input); // Calculate the natural logarithm
+                    textBox1.Text = result.ToString();
+                }
+                catch (Exception ex)
+                {
+                    textBox1.Text = "Error";
+                    // Handle and log the error, e.g., invalid input.
+                }
+            }
         }
     }
 }
