@@ -220,6 +220,7 @@
             this.ln.TabIndex = 13;
             this.ln.Text = "ln";
             this.ln.UseVisualStyleBackColor = true;
+            this.ln.Click += new System.EventHandler(this.ln_Click);
             // 
             // clear
             // 

@@ -17,7 +17,12 @@ namespace CALCULATOR
             InitializeComponent();
         }
         bool operationPerformed = false;
+        bool e_clicked = false;
+        bool pi_clicked = false;
 
+
+
+        
         private void HandleButtonClick(Button button)
         {
             if (operationPerformed)
@@ -26,7 +31,16 @@ namespace CALCULATOR
                 operationPerformed = false;
             }
             textBox1.Text += button.Text;
-        }
+        }//template func to display the numbers btns in the textBox1
+
+        private void HandleOperandClick(Button button)
+        {
+            textBox1.Text += button.Text;
+            operationPerformed = false;
+        } //template func to avoid duplicate math constants
+
+
+
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -35,7 +49,11 @@ namespace CALCULATOR
 
         private void pi_Click(object sender, EventArgs e)
         {
-            HandleButtonClick((Button)sender);
+            if (!pi_clicked)
+            {
+                textBox1.Text += " 3.141592 ";
+                pi_clicked = true;
+            }
 
         }
 
@@ -96,10 +114,16 @@ namespace CALCULATOR
         {
             if (operationPerformed)
             {
+
                 textBox1.Clear();
                 operationPerformed = false;
             }
-            textBox1.Text += " 2.71828 ";
+            if (!e_clicked)
+            {
+                textBox1.Text += " 2.71828 ";
+                e_clicked = true;
+            }
+            
         }
 
         private void three_Click(object sender, EventArgs e)
@@ -119,13 +143,14 @@ namespace CALCULATOR
             try
             {
                 DataTable dt = new DataTable();
+                //Compute evaluates the content of the textbox
                 var result = dt.Compute(textBox1.Text, "");
                 textBox1.Text = result.ToString();
                 operationPerformed = true;
             }
             catch (Exception ex)
             {
-                textBox1.Text = "Error";
+                textBox1.Text = "Operation failed for some logic reasons of yours";
                 // Handle and log the error, e.g., division by zero.
             }
             
@@ -133,27 +158,22 @@ namespace CALCULATOR
 
         private void backspace_Click(object sender, EventArgs e)
         {
-            HandleButtonClick((Button)sender);
+            HandleOperandClick((Button)sender);
         }
 
         private void minus_Click(object sender, EventArgs e)
         {
-            HandleButtonClick((Button)sender);
+            HandleOperandClick((Button)sender);
         }
 
         private void times_Click(object sender, EventArgs e)
         {
-            if (operationPerformed)
-            {
-                textBox1.Clear();
-                operationPerformed = false;
-            }
-            textBox1.Text += ((Button)sender).Text; ;
+            HandleOperandClick((Button)sender);
         }
 
         private void over_Click(object sender, EventArgs e)
         {
-            HandleButtonClick((Button)sender);
+            HandleOperandClick((Button)sender);
         }
 
         private void dot_Click(object sender, EventArgs e)
@@ -164,6 +184,24 @@ namespace CALCULATOR
         private void clear_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
+        }
+
+        private void ln_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox1.Text))
+            {
+                try
+                {
+                    double input = double.Parse(textBox1.Text);
+                    double result = Math.Log(input); // Calculate the natural logarithm
+                    textBox1.Text = result.ToString();
+                }
+                catch (Exception ex)
+                {
+                    textBox1.Text = "Error calculating, either not appropriate operation or entries";
+                    // Handle and log the error, e.g., invalid input.
+                }
+            }
         }
     }
 }
