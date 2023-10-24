@@ -17,6 +17,8 @@ namespace CALCULATOR
             InitializeComponent();
         }
         bool operationPerformed = false;
+        bool e_clicked = false;
+        bool pi_clicked = false;
 
         //template func to display the numbers btns in the textBox1
         private void HandleButtonClick(Button button)
@@ -29,6 +31,11 @@ namespace CALCULATOR
             textBox1.Text += button.Text;
         }
 
+        private void HandleOperandClick(Button button)
+        {
+            textBox1.Text += button.Text;
+            operationPerformed = false;
+        }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -36,7 +43,11 @@ namespace CALCULATOR
 
         private void pi_Click(object sender, EventArgs e)
         {
-            textBox1.Text += " 3.141592 ";
+            if (!pi_clicked)
+            {
+                textBox1.Text += " 3.141592 ";
+                pi_clicked = true;
+            }
 
         }
 
@@ -100,7 +111,12 @@ namespace CALCULATOR
                 textBox1.Clear();
                 operationPerformed = false;
             }
-            textBox1.Text += " 2.71828 ";
+            if (!e_clicked)
+            {
+                textBox1.Text += " 2.71828 ";
+                e_clicked = true;
+            }
+            
         }
 
         private void three_Click(object sender, EventArgs e)
@@ -133,23 +149,23 @@ namespace CALCULATOR
         }
 
         private void backspace_Click(object sender, EventArgs e)
-        { 
-            textBox1.Text += ((Button)sender).Text;
+        {
+            HandleOperandClick((Button)sender);
         }
 
         private void minus_Click(object sender, EventArgs e)
         {
-            textBox1.Text += ((Button)sender).Text;
+            HandleOperandClick((Button)sender);
         }
 
         private void times_Click(object sender, EventArgs e)
         {
-            textBox1.Text += ((Button)sender).Text; 
+            HandleOperandClick((Button)sender);
         }
 
         private void over_Click(object sender, EventArgs e)
         {
-            textBox1.Text += ((Button)sender).Text;
+            HandleOperandClick((Button)sender);
         }
 
         private void dot_Click(object sender, EventArgs e)
@@ -174,7 +190,7 @@ namespace CALCULATOR
                 }
                 catch (Exception ex)
                 {
-                    textBox1.Text = "Error";
+                    textBox1.Text = "Error calculating, either not appropriate operation or entries";
                     // Handle and log the error, e.g., invalid input.
                 }
             }
