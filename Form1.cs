@@ -114,6 +114,7 @@ namespace CALCULATOR
         {
             if (operationPerformed)
             {
+
                 textBox1.Clear();
                 operationPerformed = false;
             }
