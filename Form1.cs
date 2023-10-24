@@ -20,7 +20,9 @@ namespace CALCULATOR
         bool e_clicked = false;
         bool pi_clicked = false;
 
-        //template func to display the numbers btns in the textBox1
+
+
+        
         private void HandleButtonClick(Button button)
         {
             if (operationPerformed)
@@ -29,13 +31,17 @@ namespace CALCULATOR
                 operationPerformed = false;
             }
             textBox1.Text += button.Text;
-        }
+        }//template func to display the numbers btns in the textBox1
 
         private void HandleOperandClick(Button button)
         {
             textBox1.Text += button.Text;
             operationPerformed = false;
-        }
+        } //template func to avoid duplicate math constants
+
+
+
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -136,6 +142,7 @@ namespace CALCULATOR
             try
             {
                 DataTable dt = new DataTable();
+                //Compute evaluates the content of the textbox
                 var result = dt.Compute(textBox1.Text, "");
                 textBox1.Text = result.ToString();
                 operationPerformed = true;
